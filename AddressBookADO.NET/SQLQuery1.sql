@@ -195,4 +195,5 @@ BEGIN TRANSACTION;
 END
 GO
 
+
 select * from ContactDetails

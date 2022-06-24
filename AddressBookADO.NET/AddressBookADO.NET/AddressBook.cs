@@ -35,7 +35,6 @@ namespace AddressBookADO.NET
                 com.Parameters.AddWithValue("@PhoneNumber", obj.PhoneNumber);
                 com.Parameters.AddWithValue("@Email", obj.Email);
 
-
                 con.Open();
                 int i = com.ExecuteNonQuery();
                 con.Close();
