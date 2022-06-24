@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace AddressBookADO.NET
+namespace AddressBookProblem
 {
-    public class CustomException : Exception
+
+    internal class CustomException : Exception
     {
         public enum ExceptionType
         {
@@ -19,3 +20,4 @@ namespace AddressBookADO.NET
         }
     }
 }
+    

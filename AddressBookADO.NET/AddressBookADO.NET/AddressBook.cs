@@ -1,4 +1,5 @@
-﻿using System;
+﻿using AddressBookProblem;
+using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.SqlClient;
@@ -10,7 +11,7 @@ namespace AddressBookADO.NET
 {
     public class AddressBook
     {
-        public static string connection = @"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=create database AddressBookADO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
+        public static string connection = @"Data Source=(localdb)\\MSSQLLocalDB;Initial Catalog=AddressBookADO;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False;ApplicationIntent=ReadWrite;MultiSubnetFailover=False";
         SqlConnection sqlConnection = new SqlConnection(connection);
 
         public void SetConnection()
