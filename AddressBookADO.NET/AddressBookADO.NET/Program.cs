@@ -40,6 +40,13 @@ namespace AddressBookProblem
                             Console.WriteLine(data.Id + " " + data.FirstName + " " + data.LastName + " " + data.Address + " " + data.City + " " + data.State + " " + data.ZipCode + " " + data.PhoneNumber + " " + data.Email);
                         }
                         break;
+                    case 3:
+                        AddressBookModel emp = new AddressBookModel();
+                        emp.Id = 1;
+
+                        emp.PhoneNumber = "7847850147";
+                        empservice.UpdateEmp(emp);
+                        break;
                     case 0:
                         check = false;
                         break;
