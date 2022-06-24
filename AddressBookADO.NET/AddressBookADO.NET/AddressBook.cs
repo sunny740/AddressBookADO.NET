@@ -57,5 +57,113 @@ namespace AddressBookADO.NET
                 this.con.Close();
             }
         }
+        public List<AddressBookModel> GetAllEmployees()
+        {
+            connection();
+            List<AddressBookModel> EmpList = new List<AddressBookModel>();
+            SqlCommand com = new SqlCommand("spViewContacts", con);
+            com.CommandType = CommandType.StoredProcedure;
+            SqlDataAdapter da = new SqlDataAdapter(com);
+            DataTable dt = new DataTable();
+            con.Open();
+            da.Fill(dt);
+            con.Close();
+            //Bind EmpModel generic list using dataRow     
+            foreach (DataRow dr in dt.Rows)
+            {
+                EmpList.Add(
+                    new AddressBookModel
+                    {
+                        Id = Convert.ToInt32(dr["Id"]),
+                        FirstName = Convert.ToString(dr["FirstName"]),
+                        LastName = Convert.ToString(dr["LastName"]),
+                        Address = Convert.ToString(dr["Address"]),
+                        City = Convert.ToString(dr["City"]),
+                        State = Convert.ToString(dr["State"]),
+                        ZipCode = Convert.ToInt32(dr["ZipCode"]),
+                        PhoneNumber = Convert.ToString(dr["PhoneNumber"]),
+                        Email = Convert.ToString(dr["Email"]),
+
+                    }
+                    );
+            }
+            return EmpList;
+        }
+        //To Update Emp data   
+        public bool UpdateEmp(AddressBookModel obj)
+        {
+            connection();
+            SqlCommand com = new SqlCommand("SPUpdateDetails", con);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Id", obj.Id);
+
+            com.Parameters.AddWithValue("@PhoneNumber", obj.PhoneNumber);
+
+            con.Open();
+            int i = com.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        //Delete details
+        public bool DeleteEmployee(int Id)
+        {
+            connection();
+            SqlCommand com = new SqlCommand("spDeletePersonById", con);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Id", Id);
+
+            con.Open();
+            int i = com.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        //Retrieve Data from City or State
+
+        public string PrintDataBasedOnCity(string City, string State)
+        {
+            string nameList = "";
+            string query = @"select * from AddressBook_Table where City =" + City + " or State=" + State;
+            SqlCommand sqlCommand = new SqlCommand(query, sqlConnection);
+            sqlConnection.Open();
+            SqlDataReader sqlDataReader = sqlCommand.ExecuteReader();
+            if (sqlDataReader.HasRows)
+            {
+                while (sqlDataReader.Read())
+                {
+                    DisplayEmployeeDetails(sqlDataReader);
+                    nameList += sqlDataReader["FirstName"].ToString() + " ";
+                }
+            }
+            return nameList;
+        }
+        Contact Contact = new Contact();
+        public void DisplayEmployeeDetails(SqlDataReader sqlDataReader)
+        {
+            Contact.Firstname = Convert.ToString(sqlDataReader["FirstName"]);
+            Contact.Lastname = Convert.ToString(sqlDataReader["LastName"]);
+            Contact.Address = Convert.ToString(sqlDataReader["Address"] + " " + sqlDataReader["City"] + " " + sqlDataReader["State"] + " " + sqlDataReader["zip"]);
+            Contact.PhoneNumber = Convert.ToInt64(sqlDataReader["PhoneNumber"]);
+            Contact.Email = Convert.ToString(sqlDataReader["email"]);
+            Contact.Zip = Convert.ToInt64(sqlDataReader["Zip"]);
+            Contact.Type = Convert.ToString(sqlDataReader["Type"]);
+            Console.WriteLine("{0} \n {1} \n {2} \n {3} \n {4} \n {5} \n {6}", Contact.Firstname, Contact.Lastname, Contact.Address, Contact.PhoneNumber, Contact.Email, Contact.Zip, Contact.Type);
+        }
     }
 }
