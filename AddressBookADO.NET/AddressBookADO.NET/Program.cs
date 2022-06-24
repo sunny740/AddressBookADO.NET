@@ -47,6 +47,23 @@ namespace AddressBookProblem
                         emp.PhoneNumber = "7847850147";
                         empservice.UpdateEmp(emp);
                         break;
+                    case 4:
+                        List<AddressBookModel> eList = payrollService.GetAllEmployees();
+                        Console.WriteLine("Enter the Contact Id to Delete the Record  From the Table");
+                        int empId = Convert.ToInt32(Console.ReadLine());
+                        foreach (AddressBookModel data in eList)
+                        {
+                            if (data.Id == empId)
+                            {
+                                payrollService.DeleteEmployee(empId);
+                                Console.WriteLine("Record Successfully Deleted");
+                            }
+                            else
+                            {
+                                Console.WriteLine(empId + "is Not present int he Data base");
+                            }
+                        }
+                        break;
                     case 0:
                         check = false;
                         break;

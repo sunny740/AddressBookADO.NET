@@ -112,5 +112,25 @@ namespace AddressBookADO.NET
                 return false;
             }
         }
+        public bool DeleteEmployee(int Id)
+        {
+            connection();
+            SqlCommand com = new SqlCommand("spDeletePersonById", con);
+
+            com.CommandType = CommandType.StoredProcedure;
+            com.Parameters.AddWithValue("@Id", Id);
+
+            con.Open();
+            int i = com.ExecuteNonQuery();
+            con.Close();
+            if (i >= 1)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
     }
 }
